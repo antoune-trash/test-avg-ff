@@ -30,13 +30,13 @@ const standardDeviationSeconds = ref<number | null>(null)
 
 const valuesStr = computed(() => {
   const _expectedTimeSeconds = expectedTimeSeconds.value
-    ? `Rср ${expectedTimeSeconds.value.toFixed(0)}`
+    ? `Rср ${expectedTimeSeconds.value.toFixed(2)}`
     : ''
   const _excellentTimeSeconds = excellentTimeSeconds.value
-    ? `Rотл ${excellentTimeSeconds.value.toFixed(0)}`
+    ? `Rотл ${excellentTimeSeconds.value.toFixed(2)}`
     : ''
   const _standardDeviationSeconds = standardDeviationSeconds.value
-    ? `Сигма ${standardDeviationSeconds.value.toFixed(0)}`
+    ? `Сигма ${standardDeviationSeconds.value.toFixed(2)}`
     : ''
 
   return `${_expectedTimeSeconds}, ${_excellentTimeSeconds}, ${_standardDeviationSeconds}`.trim()
