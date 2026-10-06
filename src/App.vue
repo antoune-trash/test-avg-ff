@@ -4,7 +4,7 @@ import { computed, ref } from 'vue'
 
 const synergyCount = ref(10)
 const totalCost = ref(100)
-const playerLevelCompletionTimeS = ref(160)
+const playerLevelCompletionTimeS = ref(45)
 
 const canCalculate = computed(() => {
   return synergyCount.value > 0 && totalCost.value > 0 && playerLevelCompletionTimeS.value > 0
@@ -12,7 +12,16 @@ const canCalculate = computed(() => {
 
 const result = ref<number | null>(null)
 const resultText = computed(() => {
-  return result.value !== null ? `Лучше чем у ${result.value.toFixed(0)}% пользователей` : null
+  if (result.value !== null) {
+    if (result.value > 50) {
+      return {
+        variant: 'green' as const,
+        text: `Лучше чем у ${result.value.toFixed(0)}% пользователей`,
+      }
+    }
+    return { variant: 'gray' as const, text: 'Средний результат' }
+  }
+  return null
 })
 
 const expectedTimeSeconds = ref<number | null>(null)
@@ -70,7 +79,7 @@ function calculateGlaobalStatus() {
     </div>
 
     <div style="margin-top: 6px">
-      <Label style="font-weight: 600">Данные прохождения</Label>
+      <label style="font-weight: 600">Данные прохождения</label>
 
       <div class="flex pag-3">
         <label for="test-time"> Время прохождения (R тест, секунды) </label>
@@ -83,10 +92,19 @@ function calculateGlaobalStatus() {
     </button>
 
     <div v-if="resultText" style="margin-top: 10px">
-      <label>Результат</label>
+      <label style="font-weight: 600">Результат</label>
 
-      <h3 style="color: #2e7920; margin-top: 6px; margin-bottom: 6px">
-        {{ resultText }}
+      <h3
+        v-if="resultText.variant === 'green'"
+        style="color: #2e7920; margin-top: 6px; margin-bottom: 6px"
+      >
+        {{ resultText.text }}
+      </h3>
+      <h3
+        v-if="resultText.variant === 'gray'"
+        style="color: #5f6267; margin-top: 6px; margin-bottom: 6px"
+      >
+        {{ resultText.text }}
       </h3>
       <p style="margin-top: 6px">{{ valuesStr }}</p>
     </div>
