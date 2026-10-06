@@ -42,8 +42,11 @@ export function calculateCompleteonGlobalStatus({
   }
 
   const actualTimeSeconds = palyerLevelCompletionTimeMs / 1000
-  const expectedTimeSeconds = (0.133 * totalCost + 3.6819) * synergyCount
-  const excellentTimeSeconds = (0.1042 * totalCost + 1.6737) * synergyCount
+
+  const averageSynergyCost = totalCost / synergyCount
+
+  const expectedTimeSeconds = (0.133 * averageSynergyCost + 3.6819) * synergyCount
+  const excellentTimeSeconds = (0.1042 * averageSynergyCost + 1.6737) * synergyCount
 
   const standardDeviationSeconds = (expectedTimeSeconds - excellentTimeSeconds) / 3
 
